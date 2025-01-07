@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.StudentCreateRequestDto;
+import com.example.demo.dto.StudentCreateResponseDto;
 import com.example.demo.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,20 +30,8 @@ public class StudentController { // 클래스 파일 (객체의 청사진)
 
     // 생성
     @PostMapping
-    public String createStudentAPI(){
-        String studentName = "지안";
-
-        String saveData = studentService(studentName);
-        return  saveData;
-    }
-
-    // methodA() 기능
-    @GetMapping("/methodA")
-    public String methodA(){
-        log.info("::: StudentController.methodA :::");
-
-        int a = 1;
-        studentService.methodA(a);
-        return "methodA를 호출했다.";
+    public studentCreateResponseDto createStudentAPI(@RequestBody StudentCreateRequestDto studentCreateRequestDto){
+        StudentCreateResponseDto studentCreateResponseDto = studentService.createStudentService(studentCreateRequestDto);
+        return  studentCreateResponseDto;
     }
 }

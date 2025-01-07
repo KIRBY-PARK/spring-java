@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Student;
+import com.example.demo.dto.StudentCreateRequestDto;
+import com.example.demo.dto.StudentCreateResponseDto;
 import com.example.demo.repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,15 +19,25 @@ public class StudentService {
     }
 
     // 생성
-    public String createStudentService(String studentName){
+    public studentCreateResponseDto createStudentService(StudentCreateRequestDto studentCreateRequestDto){
         // 학생 생성
         log.info("학생을 생성합니다.");
 
+        // 데이터 받아오기
+        String studentName = studentCreateRequestDto.getName();
+
+        // 엔티티 생성
         Student student = new Student();
+
+        // 엔티티 속성 절정
         student.setName(studentName);
 
-        studentRepository.save(student);
-        return "성공";
+        Student savedStudent = studentRepository.save(student);
+        Long savedStudentId = savedStudent.getId();
+
+        // ResponseDto 생성 후 반환
+        StudentCreateResponseDto studentCreateResponseDto = new StudentCreateResponseDto();
+        return studentCreateResponseDto;
     }
 
     // 조회
